@@ -1,10 +1,14 @@
 import { ToolType, DesignStage, PriceCategory } from "@/types/tools";
-import { Search, X, Monitor, Wrench, Package } from "lucide-react";
+import { Search, X, Monitor, Wrench, Package, Scissors, Zap, Cog, BookOpen } from "lucide-react";
 
 const typeOptions: { value: ToolType; label: string; icon: typeof Monitor }[] = [
   { value: "Software", label: "Software", icon: Monitor },
-  { value: "Equipment", label: "Equipment", icon: Wrench },
-  { value: "Material", label: "Material", icon: Package },
+  { value: "Hand Tools", label: "Hand Tools", icon: Wrench },
+  { value: "Power Tools", label: "Power Tools", icon: Zap },
+  { value: "Machines", label: "Machines", icon: Cog },
+  { value: "Materials", label: "Materials", icon: Package },
+  { value: "Textiles", label: "Textiles", icon: Scissors },
+  { value: "Techniques", label: "Techniques", icon: BookOpen },
 ];
 
 const stageOptions: DesignStage[] = [
@@ -49,7 +53,7 @@ export const FilterBar = ({
           type="text"
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Search tools, materials, equipment..."
+          placeholder="Search tools, materials, textiles, techniques..."
           className="w-full rounded-lg border border-input bg-card py-3 pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>

@@ -1,10 +1,14 @@
 import { DesignTool, ToolType, PriceCategory } from "@/types/tools";
-import { ExternalLink, Monitor, Wrench, Package } from "lucide-react";
+import { ExternalLink, Monitor, Wrench, Package, Scissors, Zap, Cog, BookOpen } from "lucide-react";
 
 const typeConfig: Record<ToolType, { icon: typeof Monitor; className: string }> = {
   Software: { icon: Monitor, className: "bg-software text-software-foreground" },
-  Equipment: { icon: Wrench, className: "bg-equipment text-equipment-foreground" },
-  Material: { icon: Package, className: "bg-material text-material-foreground" },
+  "Hand Tools": { icon: Wrench, className: "bg-equipment text-equipment-foreground" },
+  "Power Tools": { icon: Zap, className: "bg-equipment text-equipment-foreground" },
+  Machines: { icon: Cog, className: "bg-equipment text-equipment-foreground" },
+  Materials: { icon: Package, className: "bg-material text-material-foreground" },
+  Textiles: { icon: Scissors, className: "bg-accent text-accent-foreground" },
+  Techniques: { icon: BookOpen, className: "bg-secondary text-secondary-foreground" },
 };
 
 const priceColors: Record<PriceCategory, string> = {
@@ -32,9 +36,16 @@ export const ToolCard = ({ tool }: ToolCardProps) => {
           <h3 className="font-semibold text-base leading-tight text-foreground truncate">
             {tool.name}
           </h3>
-          <span className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${priceColors[tool.price]}`}>
-            {tool.price}
-          </span>
+          <div className="flex flex-wrap items-center gap-1.5 mt-1">
+            <span className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${priceColors[tool.price]}`}>
+              {tool.price}
+            </span>
+            {tool.subCategory && (
+              <span className="inline-block rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
+                {tool.subCategory}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
