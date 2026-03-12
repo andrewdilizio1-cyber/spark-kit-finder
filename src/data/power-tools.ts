@@ -1,0 +1,55 @@
+import { DesignTool } from "@/types/tools";
+
+export const powerTools: DesignTool[] = [
+  // === POWER TOOLS ===
+  {
+    id: "drill",
+    name: "Drill (Cordless / Bench)",
+    description: "Handheld or bench-mounted tool for drilling holes and fastening materials.",
+    type: "Power Tools",
+    designStages: ["Build"],
+    price: "Free",
+    audience: "Students",
+    tags: ["Fastening", "Holes", "Versatile"],
+  },
+  {
+    id: "jigsaw",
+    name: "Jigsaw",
+    description: "Portable power saw for cutting curves and irregular shapes in wood and plastic.",
+    type: "Power Tools",
+    designStages: ["Build"],
+    price: "Free",
+    audience: "Students",
+    tags: ["Cutting", "Curves", "Woodwork"],
+  },
+  {
+    id: "orbital-sander",
+    name: "Orbital Sander",
+    description: "Power sander for quickly smoothing wood surfaces before finishing.",
+    type: "Power Tools",
+    designStages: ["Build"],
+    price: "Free",
+    audience: "Students",
+    tags: ["Finishing", "Smoothing", "Woodwork"],
+  },
+  {
+    id: "heat-gun",
+    name: "Heat Gun",
+    description: "Produces hot air for bending plastics, stripping paint, and heat-shrinking.",
+    type: "Power Tools",
+    designStages: ["Build"],
+    price: "Free",
+    audience: "Students",
+    tags: ["Forming", "Plastics", "Heating"],
+  },
+  {
+    id: "hot-glue-gun",
+    name: "Hot Glue Gun",
+    description: "Quick-bonding adhesive tool ideal for prototyping and model making.",
+    type: "Power Tools",
+    designStages: ["Prototype", "Build"],
+    price: "Free",
+    audience: "Students",
+    tags: ["Adhesive", "Prototyping", "Quick Bond"],
+  },
+];
