@@ -1,9 +1,10 @@
 import { useState, useMemo } from "react";
 import { tools } from "@/data/tools";
-import { ToolType, DesignStage, PriceCategory } from "@/types/tools";
+import { ToolType, DesignStage, PriceCategory, SubCategory } from "@/types/tools";
 import { HeroSection } from "@/components/HeroSection";
 import { FilterBar } from "@/components/FilterBar";
 import { ToolCard } from "@/components/ToolCard";
+import { useFavourites } from "@/hooks/useFavourites";
 
 const toggleItem = <T,>(arr: T[], item: T): T[] =>
   arr.includes(item) ? arr.filter((i) => i !== item) : [...arr, item];
@@ -13,9 +14,14 @@ const Index = () => {
   const [selectedTypes, setSelectedTypes] = useState<ToolType[]>([]);
   const [selectedStages, setSelectedStages] = useState<DesignStage[]>([]);
   const [selectedPrices, setSelectedPrices] = useState<PriceCategory[]>([]);
+  const [selectedSubCategories, setSelectedSubCategories] = useState<SubCategory[]>([]);
+  const [showFavourites, setShowFavourites] = useState(false);
+  const { isFavourite, toggleFavourite, count: favouriteCount } = useFavourites();
 
   const filtered = useMemo(() => {
     return tools.filter((tool) => {
+      // Favourites
+      if (showFavourites && !isFavourite(tool.id)) return false;
       // Search
       if (search) {
         const q = search.toLowerCase();
@@ -27,19 +33,23 @@ const Index = () => {
       }
       // Type
       if (selectedTypes.length > 0 && !selectedTypes.includes(tool.type)) return false;
+      // Sub-category
+      if (selectedSubCategories.length > 0 && (!tool.subCategory || !selectedSubCategories.includes(tool.subCategory))) return false;
       // Stage
       if (selectedStages.length > 0 && !tool.designStages.some((s) => selectedStages.includes(s))) return false;
       // Price
       if (selectedPrices.length > 0 && !selectedPrices.includes(tool.price)) return false;
       return true;
     });
-  }, [search, selectedTypes, selectedStages, selectedPrices]);
+  }, [search, selectedTypes, selectedStages, selectedPrices, selectedSubCategories, showFavourites, isFavourite]);
 
   const clearAll = () => {
     setSearch("");
     setSelectedTypes([]);
     setSelectedStages([]);
     setSelectedPrices([]);
+    setSelectedSubCategories([]);
+    setShowFavourites(false);
   };
 
   return (
@@ -58,6 +68,11 @@ const Index = () => {
             onToggleStage={(s) => setSelectedStages(toggleItem(selectedStages, s))}
             selectedPrices={selectedPrices}
             onTogglePrice={(p) => setSelectedPrices(toggleItem(selectedPrices, p))}
+            selectedSubCategories={selectedSubCategories}
+            onToggleSubCategory={(s) => setSelectedSubCategories(toggleItem(selectedSubCategories, s))}
+            showFavourites={showFavourites}
+            onToggleFavourites={() => setShowFavourites((v) => !v)}
+            favouriteCount={favouriteCount}
             resultCount={filtered.length}
             onClearAll={clearAll}
           />
@@ -72,7 +87,11 @@ const Index = () => {
                 className="animate-fade-in-up"
                 style={{ animationDelay: `${Math.min(i * 40, 400)}ms` }}
               >
-                <ToolCard tool={tool} />
+                <ToolCard
+                  tool={tool}
+                  isFavourite={isFavourite(tool.id)}
+                  onToggleFavourite={toggleFavourite}
+                />
               </div>
             ))}
           </div>
